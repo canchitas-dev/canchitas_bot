@@ -2,28 +2,29 @@
 
 import discord
 from settings import TOKEN, BOT_ID
-from string import digits
-from random import randint
+from text_utils import is_haiku
 
 
-def process_text_detectors(message):
-    is_haiku(message)
+async def detect_patterns(message):
+    detectors = {
+        is_haiku: "Woaaa, tu mensaje es un haiku!"
+    }
+
+    for detector, response in detectors.items():
+        if detector(message.content):
+            await message.channel.send(response)
 
 
 class Client(discord.Client):
     async def on_ready(self):
         print(f'Logged on as {self.user}!')
+        print("Ready to accept DS gateway events")
 
     async def on_message(self, message):
-        print(f'Message from {message.author}: {message.content}')
-        print(f"Mentions for message: {message.mentions}")
+        # process command logic here
 
-        process_text_detectors(message)
-
-        if len(message.mentions) == 1 and message.mentions[0].id == BOT_ID:
-            await message.channel.send("num 0 to 9")
-            message = await client.wait_for('message', timeout=30.0)
-            print("got num: ", message.content)
+        # if this is not a command, evaluate fun bot dections (or conversation input)
+        await detect_patterns(message)
 
 
 intents = discord.Intents.default()
