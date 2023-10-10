@@ -22,3 +22,10 @@ def is_haiku(string):
     string = [silabeador.syllabify(line) for line in string]
 
     return len(string[0]) == 5 and len(string[1]) == 7 and len(string[2]) == 5
+
+def contains_trigger_word(string):
+    '''Does the string contain a trigger word?'''
+    string = string.lower()
+
+    return 'puto' in string 
+        
