@@ -8,6 +8,7 @@ from text_utils import is_haiku
 async def detect_patterns(message):
     detectors = {
         is_haiku: "Woaaa, tu mensaje es un haiku!"
+        contains_trigger_word: 'Puto tú'
     }
 
     for detector, response in detectors.items():
