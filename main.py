@@ -2,14 +2,18 @@
 
 import discord
 from settings import TOKEN, BOT_ID
-from text_utils import is_haiku
+from text_utils import is_haiku, contains_trigger_word
 
 
 async def detect_patterns(message):
     detectors = {
-        is_haiku: "Woaaa, tu mensaje es un haiku!"
+        is_haiku: "Woaaa, tu mensaje es un haiku!",
         contains_trigger_word: 'Puto tú'
     }
+
+    if message.author.id == BOT_ID:
+        # dont reply to ourselves
+        return
 
     for detector, response in detectors.items():
         if detector(message.content):
